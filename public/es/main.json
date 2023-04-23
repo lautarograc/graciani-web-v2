@@ -1,0 +1,7 @@
+{
+    "welcome": {
+        "title": "¡Bienvenido!",
+        "detectedLanguage": "Detecté que tu lenguaje es {language}.",
+        "languageSupported": "Recuerda que siempre puedes cambiar el idioma en la parte superior de la página"
+    }
+}

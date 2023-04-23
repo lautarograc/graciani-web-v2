@@ -1,0 +1,8 @@
+{
+    "welcome": {
+        "title": "Welcome!",
+        "detectedLanguage": "I detected that your current language is {language}.",
+        "languageNotSupported": "Unfortunately, I don't speak {language}, so I defaulted to english. However, If you feel more comfortable, I do speak spanish, so feel free to change to it by clicking the button below.",
+        "languageSupported": "Remember you can always change the language by clicking the button at the top of the welcoming page"
+    }
+}
