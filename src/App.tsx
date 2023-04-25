@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import WelcomePage from './components/welcome/welcomePage'
+
 function App() {
   return (
     // div with tailwind flex
@@ -7,4 +9,10 @@ function App() {
     </div>
   )
 };
-export default App
+export default function WrappedApp() {
+  return (
+    <Suspense fallback="loading">
+      <App />
+    </Suspense>
+  )
+}

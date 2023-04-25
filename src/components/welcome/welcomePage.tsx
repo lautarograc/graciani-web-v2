@@ -1,51 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
-
-
-const Typewriter = ({ text }: { text: string }) => {
-    const [phrase, setPhrase] = useState('');
-    const [index, setIndex] = useState(0);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            index < text.length && setPhrase((prev) => prev + text.charAt(index));
-            setIndex((prev) => prev + 1);
-        }, 100);
-
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [index]);
-
-    return <span>{phrase}</span>;
-};
+import TypewriterEffect from '../shared/typeWriter';
+import languages from '../../../public/locales/languages.json';
 
 const WelcomePage = () => {
     const { t } = useTranslation();
     const { i18n } = useTranslation();
 
+    const [showGreeting, setShowGreeting] = useState(false);
+
+
     const currentLanguage = i18n.language;
 
-    const supportedLanguageText =
-        (language: string) => {
-            // if language is not en or es
-            if (language !== 'en' && language !== 'es') {
-                return t('welcome.languageNotSupported');
-            }
-            else {
-                return t('welcome.languageSupported');
-            }
-        };
+    const languageName = languages["languages"][currentLanguage as keyof typeof languages["languages"]]["nativeName"];
+
+    var SUPPORTED_LANGUAGES = ['en', 'es'];
+
+    useEffect(() => {
+        // wait for typewriter animation to complete
+        setTimeout(() => {
+            setShowGreeting(true);
+        }, (t('welcome.title').length + 1) * 500); // add 1 to length to account for space at the end of the title
+    }, []);
+
     return (
-        // with tailwind
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div className="flex flex-col items-center justify-center">
             <h1 className="text-4xl font-bold text-center">
-                <Typewriter text={t('welcome.title')} />
+                {showGreeting ? (
+                    <p> {t('welcome.detectedLanguage', { language: languageName })} <br />
+                        {SUPPORTED_LANGUAGES.includes(currentLanguage) ? t('welcome.languageSupported') : t('welcome.languageNotSupported', { language: languageName })}
+                    </p>
+                ) : (
+                    <TypewriterEffect text={t('welcome.title')} />
+                )}
             </h1>
-            <h2 className="text-2xl font-bold text-center">
-                <Typewriter text={supportedLanguageText(currentLanguage)} />
-            </h2>
         </div>
     );
 };
